@@ -1,0 +1,123 @@
+{%extends 'todo/basic.html'%}
+
+{%block title%}Todo Personal{%endblock%}
+
+
+
+{%block style%}
+    .table{
+        margin-top: 0px;
+    }
+     .btnn {
+      padding: 8px 40px;
+      background-color: #4CAF50;
+      transition: background-color 0.3s ease;
+      border-radius: 5px;
+      color: white;
+
+    }
+    .btnn:hover {
+    background-color: #45a049; /* darker green on hover */
+    color: white; /* keep text white */
+  }
+    .btn {
+          padding: 4px 18px;
+          background-color: #D2042D;
+          transition: background-color 0.3s ease;
+          border-radius: 5px;
+          color: white;
+
+        }
+        .btn:hover {
+        background-color:#880808 ; /* darker green on hover */
+        color: white; /* keep text white */
+      }
+        .statusnot{
+        text-decoration: none;
+        padding: 4px 18px;
+        background-color: #D2042D;
+        transition: background-color 0.3s ease;
+        border-radius: 5px;
+        color: white;
+        font-size: 12px;
+        font-weight: bold;
+
+        }
+        .statusnot:hover {
+        text-decoration: none;
+        background-color:green ; /* darker green on hover */
+        color: white; /* keep text white */
+      }
+        .statusdone{
+        text-decoration: none;
+        padding: 4px 30px;
+        background-color: green;
+        transition: background-color 0.3s ease;
+        border-radius: 5px;
+        color: white;
+        font-size: 12px;
+        font-weight: bold;
+        }
+        .statusdone:hover {
+        text-decoration: none;
+        background-color:red ; /* darker green on hover */
+        color: white; /* keep text white */
+      }
+
+{%endblock%}
+
+
+{%block body%}
+
+    <div class="container px-5 pt-14 pb-12 mx-auto">
+      <div class="flex flex-wrap w-full  flex-col items-center text-center">
+        <h1 class="sm:text-3xl text-2xl font-medium title-font mb-2 text-gray-900">Welcome, Omer Chaudhry</h1>
+        <p class="lg:w-1/2 w-full leading-relaxed text-gray-500">Organize Your Life One Aesthetic Task at a Time – Cardigans, Coffee Shops, Subway Tiles, and All</p>
+      </div>
+    </div>
+
+
+<section class=" body-font">
+  <div class="container px-5 pb-10 mx-auto">
+    <div class="lg:w-2/3 flex flex-col sm:flex-row sm:items-center items-start mx-auto">
+      <h3 class="flex-grow sm:pr-16 text-xs text-gray-900">Add Todo's   --------------></h3>
+      <a href="/todo/todo-add" class="btnn" style="color: white;">Add</a>
+    </div>
+  </div>
+</section>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Domain</th>
+      <th scope="col">Todo</th>
+      <th scope="col">Deadline</th>
+      <th scope="col">Status</th>
+      <th scope="col">Comment</th>
+        <th scope="col"></th>
+    </tr>
+  </thead>
+
+
+  <tbody>
+    {%for i in todo%}
+    <tr>
+        <th scope="row">{{forloop.counter}}</th>
+        <td>{{i.todo_domain}}</td>
+        <td>{{i.todo_work}}</td>
+        <td>{{i.todo_deadline}}</td>
+
+        {%if i.todo_status == False %}
+        <td> <a class="statusnot" href="{% url 'ChangeStatus' i.id %}" >Not Completed</a> </td>
+        {%else%}
+        <td> <a class = "statusdone" href="{% url 'ChangeStatus' i.id %}" >Completed</a> </td>
+        {%endif%}
+        <td>{{i.todo_comment}}</td>
+        <td><a href="{% url 'TodoDel' i.id %}" onclick="return confirm('Are you sure?')" class = "btn" style="color: white; font-size: 10px;">Delete</a></td>
+    </tr>
+
+    {%endfor%}
+</table>
+
+{%endblock%}
